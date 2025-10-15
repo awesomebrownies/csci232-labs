@@ -4,20 +4,28 @@ import java.util.Comparator;
 public class Term implements Comparable<Term> {
     
     // Initializes a term with the given query string and weight.
+    private String query;
+    private long weight;
     public Term(String query, long weight) {
-
+        this.query = query;
+        this.weight = weight;
     }
 
     public static Comparator<Term> byReverseWeightOrder() {
         return new Comparator<Term>() {
             public int compare(Term v, Term w) {
-                //some condition
+                //condition: less than
+                if(v.weight < w.weight) {
                     return -1;
-                //some condition
+                }
+                //condition: greater
+                if(v.weight > w.weight) {
                     return 1;
-                //some condition
+                }
+                //condition: equal
+                else {
                     return 0;
-
+                }
             }
 
         };
@@ -27,20 +35,23 @@ public class Term implements Comparable<Term> {
     public static Comparator<Term> byPrefixOrder(int r) {
         return new Comparator<Term>() {
             public int compare(Term v, Term w) {
-                //FIXME
+                String v2 = v.query.substring(0, r);
+                String w2 = w.query.substring(0, r);
+
+                return v2.compareTo(w2);
             }
         };
     }
 
     // Compares the two terms in lexicographic order by query.
     public int compareTo(Term that) {
-        return 0; //FIXME
+        return this.query.compareTo(that.query);
     }
 
     // Returns a string representation of this term in the following format:
     // the weight, followed by a tab, followed by the query.
     public String toString() {
-        return null; //FIXME
+        return weight + "    " + query;
     }
 
     // unit testing (you should have some Unit Testing here to confirm that your methods work); for example...
