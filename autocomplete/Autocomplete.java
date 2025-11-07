@@ -1,20 +1,38 @@
 import java.util.Arrays;
 
 public class Autocomplete {
-
+    Term[] terms;
     // Initializes the data structure from the given array of terms.
     public Autocomplete(Term[] terms) {
-
+        this.terms = terms;
+        Arrays.sort(terms);
     }
 
     // Returns all terms that start with the given prefix, in descending order of weight.
     public Term[] allMatches(String prefix) {
-        return null; //FIXME
+        Term prefixTerm = new Term(prefix, 1);
+        int firstIndex = BinarySearchDeluxe.firstIndexOf(terms, prefixTerm, Term.byPrefixOrder(prefix.length()));
+        int lastIndex = BinarySearchDeluxe.lastIndexOf(terms, prefixTerm, Term.byPrefixOrder(prefix.length()));
+
+        if(firstIndex == -1){return new Term[0];}
+        Term[] matches = new Term[numberOfMatches(prefix)];
+        for(int i = firstIndex; i <= lastIndex; i++){
+            matches[i-firstIndex] = terms[i];
+        }
+
+        Arrays.sort(matches, Term.byReverseWeightOrder());
+        return matches;
     }
 
     // Returns the number of terms that start with the given prefix.
     public int numberOfMatches(String prefix) {
-        return -999; //FIXME
+        Term prefixTerm = new Term(prefix, 1);
+        int firstIndex = BinarySearchDeluxe.firstIndexOf(terms, prefixTerm, Term.byPrefixOrder(prefix.length()));
+
+        if(firstIndex == -1) return firstIndex;
+
+        int lastIndex = BinarySearchDeluxe.lastIndexOf(terms, prefixTerm, Term.byPrefixOrder(prefix.length()));
+        return lastIndex-firstIndex+1;
     }
     
 

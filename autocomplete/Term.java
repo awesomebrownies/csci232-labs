@@ -14,15 +14,12 @@ public class Term implements Comparable<Term> {
     public static Comparator<Term> byReverseWeightOrder() {
         return new Comparator<Term>() {
             public int compare(Term v, Term w) {
-                //condition: less than
                 if(v.weight < w.weight) {
-                    return -1;
-                }
-                //condition: greater
-                if(v.weight > w.weight) {
                     return 1;
                 }
-                //condition: equal
+                if(v.weight > w.weight) {
+                    return -1;
+                }
                 else {
                     return 0;
                 }

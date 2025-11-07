@@ -6,15 +6,45 @@ public class BinarySearchDeluxe {
     
     // Returns the index of the first key in a[] that equals the search key, or -1 if no such key.
     public static <Key> int firstIndexOf(Key[] a, Key key, Comparator<Key> comparator) {
-
-        return -999; //FIXME
-           
+        int lo = 0;
+        int hi = a.length-1;
+        int target = -1;
+        while(lo <= hi){
+            int mid = lo+(hi-lo)/2;
+            int compare = comparator.compare(a[mid], key);
+            if(compare < 0){
+                lo = mid+1;
+            }else if(compare > 0){
+                hi = mid-1;
+            }else{
+                //search hit, but we need the lower bound
+                target = mid;
+                hi = mid-1;
+            }
+        }
+        return target;
     }
 
     
     // Returns the index of the last key in a[] that equals the search key, or -1 if no such key.
     public static <Key> int lastIndexOf(Key[] a, Key key, Comparator<Key> comparator) {
-        return -999; //FIXME
+        int lo = 0;
+        int hi = a.length-1;
+        int target = -1;
+        while(lo <= hi){
+            int mid = lo+(hi-lo)/2;
+            int compare = comparator.compare(a[mid], key);
+            if(compare < 0){
+                lo = mid+1;
+            }else if(compare > 0){
+                hi = mid-1;
+            }else{
+                //search hit, but we need the upper bound
+                target = mid;
+                lo = mid+1;
+            }
+        }
+        return target;
     }
 
     // unit testing (you should have some Unit Testing here to confirm that your methods work); for example...
@@ -26,7 +56,7 @@ public class BinarySearchDeluxe {
         terms[2] = new Term("Ellie", 11);
         terms[3] = new Term("Allen", 9);
         terms[4] = new Term("Eva", 1);
-        Arrays.sort(terms);
+        Arrays.sort(terms, Term.byPrefixOrder(1));
         
         Term searchme = new Term("J",0);
         int first = BinarySearchDeluxe.firstIndexOf(terms, searchme, Term.byPrefixOrder(1));
