@@ -1,8 +1,24 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.TreeMap;
+
+import edu.princeton.cs.algs4.Digraph;
 
 public class WordNet {
+
+    Map<Integer, LinkedList<Integer>> adjacencyList = new TreeMap<>();
+
+    //conversion between id and nouns
+    private final ArrayList<String[]> idSynsets = new ArrayList<>();
+    private final HashMap<String, HashSet<Integer>> nounToSynsetsIds = new HashMap<>();
+    //actual storage
+    private Digraph G;
 
    // constructor takes the name of the two input files
    public WordNet(String synsets, String hypernyms) throws IOException /* "throw" required for FileReader*/ {
@@ -16,7 +32,7 @@ public class WordNet {
            String synStr = parts[1];
            String[] synset = synStr.split(" ");
            //notice: the definitions are in parts[2];  we're ignoring those
-
+           
            // need to do more here (and elsewhere, too)
 
            // Read next line from file and ..
