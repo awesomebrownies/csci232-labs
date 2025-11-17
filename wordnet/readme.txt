@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Name:  Evan BRown
+ *  Name:  Evan Brown
  *
  *  Hours to complete assignment (optional):
  *
@@ -12,14 +12,15 @@ Programming Assignment 3: WordNet
  *  Describe concisely the data structure(s) you used to store the 
  *  information in synsets.txt. Why did you make this choice?
  *****************************************************************************/
-
-
+I used two data structures so that I could easily convert from id to noun and nouns to id
+The idToSynsets is an ArrayList<String[]>. The ArrayList allows me to add all of the words on the fly while reading through synsets.txt, and the index corresponds with the id.
+The nounToSynsetsId is a HashMap<String, HashSet<Integer>>. Each word has multiple ids so I stored it in a HashMap for O(1) access times along with a HashSet.
 
 /******************************************************************************
  *  Describe concisely the data structure(s) you used to store the 
  *  information in hypernyms.txt. Why did you make this choice?
  *****************************************************************************/
-
+I used the Digraph data structure because it concisely stored adjacency lists and let me take advantage of the API
 
 
 /******************************************************************************
@@ -37,19 +38,26 @@ Programming Assignment 3: WordNet
  *  edgeTo[], and distTo[] arrays.
  *****************************************************************************/
 
-Description:
+Description: ancestor() methods: First I initialize two BreadthFirstDirectedPaths, these each create marked lists for reachable paths.
+ My algorithm checks each vertex within the graph, and calls the hasPathTo. If both nodes have a path to a hyponym,
+ I check its distance from one node to the other against the current best, and reselect the hyponym if it is the shortest.
+
+ Since everything inside the BreadthFirstDirectedPaths class is pre-computed,
+ the O model of efficiency remains the same at O(V+E) for best and worst case.
+
+ length() methods: The method calls ancestor, so it can then trace the path using BreadthFirstDirectedPaths distTo method. However, the order of the growth does not change.
 
                                               running time
 method                               best case            worst case
 ------------------------------------------------------------------------
-length(int v, int w)
+length(int v, int w)                O(V + E)              O(V + E)
 
-ancestor(int v, int w)
+ancestor(int v, int w)              O(V + E)              O(V + E)
 
-length(Iterable<Integer> v,
+length(Iterable<Integer> v,         O(V + E)              O(V + E)
        Iterable<Integer> w)
 
-ancestor(Iterable<Integer> v,
+ancestor(Iterable<Integer> v,       O(V + E)              O(V + E)
          Iterable<Integer> w)
 
 
@@ -66,7 +74,7 @@ ancestor(Iterable<Integer> v,
  *  help from people (including course staff, TAs,
  *  classmates, and friends) and attribute them by name.
  *****************************************************************************/
-
+(TA) Bao Nguyen helped me with the ShortestCommonAncestor ancestor and length method
 
 /******************************************************************************
  *  Describe any serious problems you encountered.                    
